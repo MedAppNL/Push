@@ -1,0 +1,15 @@
+
+{
+    "name": "pharmit/push",
+    "type": "library",
+    "description": "A push library for Laravel for both Google and Apple",
+    "require": {
+        "php": ">=5.5.0",
+        "guzzlehttp/guzzle": "~6.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "PharmIT\\Push\\": "src/"
+        }
+    }
+}
