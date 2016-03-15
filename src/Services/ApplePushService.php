@@ -1,6 +1,6 @@
 <?php
 
-namespace PharmIT\Push;
+namespace PharmIT\Push\Services;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
@@ -16,10 +16,8 @@ class ApplePushService extends AbstractPushService
     /**
      * @inheritdoc
      */
-    public function loadConfiguration()
+    public function loadConfiguration($config)
     {
-        $config = config('push.apple');
-
         if (!isset($config['environment']) || !in_array($config['environment'], ['development', 'production'])) {
             return false;
         }
@@ -32,7 +30,7 @@ class ApplePushService extends AbstractPushService
 
         $cert = $config['certificate'];
         if (isset($config['passphrase'])) {
-            $cert = [$cert, $config['passphrase']];
+            $cert = [$cert, base_path() . '/' . $config['passphrase']];
         }
 
         if (!isset($config['topic'])) {
@@ -40,10 +38,10 @@ class ApplePushService extends AbstractPushService
         }
 
         $this->client = new Client([
-            'version' => 2.0,
-            'cert' => $cert,
+            'version'  => 2.0,
+            'cert'     => $cert,
             'base_uri' => $host,
-            'headers' => [
+            'headers'  => [
                 'apns-topic' => $config['topic'],
             ],
         ]);
@@ -84,14 +82,14 @@ class ApplePushService extends AbstractPushService
             $url = sprintf('/3/device/%s', $recipient);
             $promises[] = $this->client->postAsync($url, [
                 'body' => $bodyData,
-            ])->then(function(ResponseInterface $response) use (&$ok, $recipient) {
+            ])->then(function (ResponseInterface $response) use (&$ok, $recipient) {
                 if ($response->getStatusCode() == 200) {
                     // Set to OK if we received a 200
                     $ok[] = $recipient;
                 } else {
                     $this->failedRecipients[] = $recipient;
                 }
-            }, function() use ($recipient) {
+            }, function () use ($recipient) {
                 $this->failedRecipients[] = $recipient;
             });
         }

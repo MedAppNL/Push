@@ -1,6 +1,6 @@
 <?php
 
-namespace PharmIT\Push;
+namespace PharmIT\Push\Services;
 
 interface PushService
 {
@@ -10,7 +10,7 @@ interface PushService
      * @return bool
      *   If configuration loading was successful
      */
-    public function loadConfiguration();
+    public function loadConfiguration($config);
 
     /**
      * Set the message text for this push message.

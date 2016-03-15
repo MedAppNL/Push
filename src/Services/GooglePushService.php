@@ -1,6 +1,6 @@
 <?php
 
-namespace PharmIT\Push;
+namespace PharmIT\Push\Services;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
@@ -16,10 +16,8 @@ class GooglePushService extends AbstractPushService
     /**
      * @inheritdoc
      */
-    public function loadConfiguration()
+    public function loadConfiguration($config)
     {
-        $config = config('push.google');
-
         $host = 'https://gcm-http.googleapis.com';
 
         if (!isset($config['apikey'])) {
@@ -28,9 +26,9 @@ class GooglePushService extends AbstractPushService
 
         $this->client = new Client([
             'base_uri' => $host,
-            'headers' => [
+            'headers'  => [
                 'Authorization' => sprintf('key=%s', $config['apikey']),
-                'Content-Type' => 'application/json',
+                'Content-Type'  => 'application/json',
             ],
         ]);
 
@@ -62,7 +60,7 @@ class GooglePushService extends AbstractPushService
             $body['registration_ids'] = $recipients_part;
             $promises[] = $this->client->postAsync('/gcm/send', [
                 'body' => json_encode($body),
-            ])->then(function(ResponseInterface $response) use (&$ok, $recipients_part) {
+            ])->then(function (ResponseInterface $response) use (&$ok, $recipients_part) {
                 if ($response->getStatusCode() == 200) {
                     // Set to OK if we received a 200
                     $contents = json_decode($response->getBody()->getContents(), true);
@@ -75,7 +73,7 @@ class GooglePushService extends AbstractPushService
                         }
                     }
                 }
-            }, function() use ($recipients_part) {
+            }, function () use ($recipients_part) {
                 foreach ($recipients_part as $idx => $recipient) {
                     $this->failedRecipients[] = $recipient;
                 }

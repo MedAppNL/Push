@@ -1,5 +1,5 @@
 <?php
-namespace PharmIT\Push;
+namespace PharmIT\Push\Services;
 
 abstract class AbstractPushService implements PushService
 {
