@@ -1,14 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Tuupke
- * Date: 15/03/16
- * Time: 19:03
- */
 
 namespace PharmIT\Push;
+use Illuminate\Support\ServiceProvider;
 
-class PushServiceProvider
+class PushServiceProvider extends ServiceProvider
 {
 
     protected $defer = true;
@@ -28,6 +23,7 @@ class PushServiceProvider
     public function boot()
     {
         if (!$this->app instanceof Application || !$this->app->runningInConsole()) {
+            var_dump('Jawel hoor');
             return;
         }
 
