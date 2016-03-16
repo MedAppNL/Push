@@ -2,6 +2,7 @@
 
 namespace PharmIT\Push;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\Application;
 
 class PushServiceProvider extends ServiceProvider
 {
@@ -23,7 +24,6 @@ class PushServiceProvider extends ServiceProvider
     public function boot()
     {
         if (!$this->app instanceof Application || !$this->app->runningInConsole()) {
-            var_dump('Jawel hoor');
             return;
         }
 

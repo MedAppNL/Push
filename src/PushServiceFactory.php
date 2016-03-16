@@ -45,10 +45,9 @@ class PushServiceFactory
         ];
 
         if (!isset($config[$id][$environment])) {
-            $default = isset($config['defaultEnvironment']) ? $config['defaultEnvironment'] : 'development';
-
+            $default = isset($config['defaultEnvironment']) ? $config['defaultEnvironment'] : 'production';
             if (!isset($config[$id][$default])) {
-                return $this->handleError();
+                return $this->handleError('No valid environment found');
             } else {
                 $iconfig['env'] = $default;
             }
@@ -69,8 +68,8 @@ class PushServiceFactory
                 return null;
         }
 
-        if (!$service->loadConfiguration(array_merge($iconfig, $config[$environment]))) {
-            return $this->handleError();
+        if (!$service->loadConfiguration(array_merge($iconfig, $config[$id][$iconfig['env']]))) {
+            return $this->handleError('Settings passed to PushService were incorrect');
         }
 
         return $service;

@@ -24,13 +24,14 @@ class ApplePushService extends AbstractPushService
 
         $host = ($config['environment'] == 'development') ? 'https://api.development.push.apple.com' : 'https://api.push.apple.com';
 
-        if (!isset($config['certificate']) || !is_file($config['certificate'])) {
+
+        if (!isset($config['certificate']) || !is_file(base_path() . '/' . $config['certificate'])) {
             return false;
         }
 
-        $cert = $config['certificate'];
+        $cert = base_path() . '/' . $config['certificate'];
         if (isset($config['passphrase'])) {
-            $cert = [$cert, base_path() . '/' . $config['passphrase']];
+            $cert = [$cert, $config['passphrase']];
         }
 
         if (!isset($config['topic'])) {
@@ -38,12 +39,17 @@ class ApplePushService extends AbstractPushService
         }
 
         $this->client = new Client([
-            'version'  => 2.0,
+            'version'  => 2,.0,
             'cert'     => $cert,
             'base_uri' => $host,
             'headers'  => [
                 'apns-topic' => $config['topic'],
             ],
+//            'default' => [
+                'curl' => array(
+                    'CURLOPT_SSLVERSION' => 'CURL_SSLVERSION_TLSv1_2',
+                )
+//            ]
         ]);
 
         return true;
@@ -68,17 +74,17 @@ class ApplePushService extends AbstractPushService
                 $body['aps']['sound'] = 'default';
             }
             if (!isset($body['aps']['badge'])) {
-                $body['aps']['badge'] = 1;
+                $body['aps']['badge'] = 3;
             }
         }
 
+//        var_dump($body);
         $bodyData = json_encode($body);
 
         $ok = [];
         $promises = [];
 
         foreach ($this->recipients as $recipient) {
-
             $url = sprintf('/3/device/%s', $recipient);
             $promises[] = $this->client->postAsync($url, [
                 'body' => $bodyData,
