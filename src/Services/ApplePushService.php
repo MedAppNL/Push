@@ -39,7 +39,7 @@ class ApplePushService extends AbstractPushService
         }
 
         $this->client = new Client([
-            'version'  => 2,.0,
+            'version'  => 2.0,
             'cert'     => $cert,
             'base_uri' => $host,
             'headers'  => [
