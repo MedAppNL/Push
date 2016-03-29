@@ -45,7 +45,7 @@ return [
     |                   environment will be used when contacting Apple
     |      topic: The application identifier
     |   Google:
-    |      apikey: The G2CM API key
+    |      apikey: The GCM API key
     |
     */
     "apple" => [

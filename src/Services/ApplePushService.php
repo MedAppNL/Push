@@ -73,8 +73,9 @@ class ApplePushService extends AbstractPushService
             if (!isset($body['aps']['sound'])) {
                 $body['aps']['sound'] = 'default';
             }
+
             if (!isset($body['aps']['badge'])) {
-                $body['aps']['badge'] = 3;
+                $body['aps']['badge'] = 0;
             }
         }
 
