@@ -24,7 +24,6 @@ class ApplePushService extends AbstractPushService
 
         $host = ($config['environment'] == 'development') ? 'https://api.development.push.apple.com' : 'https://api.push.apple.com';
 
-
         if (!isset($config['certificate']) || !is_file(base_path() . '/' . $config['certificate'])) {
             return false;
         }
@@ -45,11 +44,9 @@ class ApplePushService extends AbstractPushService
             'headers'  => [
                 'apns-topic' => $config['topic'],
             ],
-//            'default' => [
-                'curl' => array(
-                    'CURLOPT_SSLVERSION' => 'CURL_SSLVERSION_TLSv1_2',
-                )
-//            ]
+            'curl'     => [
+                CURLOPT_SSLVERSION => 'CURL_SSLVERSION_TLSv1_2',
+            ]
         ]);
 
         return true;
@@ -79,7 +76,6 @@ class ApplePushService extends AbstractPushService
             }
         }
 
-//        var_dump($body);
         $bodyData = json_encode($body);
 
         $ok = [];
