@@ -14,6 +14,12 @@ class GooglePushService extends AbstractPushService
     private $client;
 
     /**
+     * @var string
+     *   The title of message
+     */
+    protected $messageTitle = null;
+
+    /**
      * @inheritdoc
      */
     public function loadConfiguration($config)
@@ -36,6 +42,17 @@ class GooglePushService extends AbstractPushService
     }
 
     /**
+     * Set message title
+     *
+     * @param string $title message title
+     */
+    public function setMessageTitle($title)
+    {
+        $this->messageTitle = $title;
+        return $this;
+    }
+
+    /**
      * @inheritdoc
      */
     public function send()
@@ -46,6 +63,10 @@ class GooglePushService extends AbstractPushService
 
         if ($this->messageData !== null) {
             $body['data'] = $this->messageData;
+        }
+
+        if ($this->messageTitle !== null) {
+            $body['data']['title'] = $this->messageTitle;
         }
 
         if ($this->messageText !== null) {
