@@ -49,7 +49,7 @@ class GooglePushService extends AbstractPushService
         }
 
         if ($this->messageText !== null) {
-            $body['data']['message'] = $this->messageText;
+            $body['data']['content'] = $this->messageText;
         }
 
         $ok = [];
