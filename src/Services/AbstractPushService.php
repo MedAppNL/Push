@@ -10,6 +10,12 @@ abstract class AbstractPushService implements PushService
     protected $messageText = null;
 
     /**
+     * @var string|null
+     *   The text of the message
+     */
+    protected $messageTitle = null;
+
+    /**
      * @var array|null
      *   The data of the message
      */

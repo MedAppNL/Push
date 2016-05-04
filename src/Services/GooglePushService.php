@@ -14,12 +14,6 @@ class GooglePushService extends AbstractPushService
     private $client;
 
     /**
-     * @var string
-     *   The title of message
-     */
-    protected $messageTitle = null;
-
-    /**
      * @inheritdoc
      */
     public function loadConfiguration($config)
