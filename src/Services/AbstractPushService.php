@@ -16,6 +16,12 @@ abstract class AbstractPushService implements PushService
     protected $messageData = null;
 
     /**
+     * @var array|null
+     *   Additional fields to add to the message payload
+     */
+    protected $additionalFields = null;
+
+    /**
      * @var array
      *   The recipient ID's
      */
@@ -42,6 +48,15 @@ abstract class AbstractPushService implements PushService
     public function setMessageData(array $data)
     {
         $this->messageData = $data;
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setAdditionalFields(array $data)
+    {
+        $this->additionalFields = $data;
         return $this;
     }
 

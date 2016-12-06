@@ -76,6 +76,11 @@ class ApplePushService extends AbstractPushService
             }
         }
 
+
+        if ($this->additionalFields !== null) {
+            $body = array_merge($this->additionalFields, $body);
+        }
+
         $bodyData = json_encode($body);
 
         $ok = [];
