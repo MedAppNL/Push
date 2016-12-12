@@ -45,7 +45,7 @@ class GooglePushService extends AbstractPushService
         ];
 
         if ($this->messageData !== null) {
-            $body['data'] = $this->messageData;
+            $body['data'] = array_merge_recursive($this->messageData, $this->additionalFields);
         }
 
         if ($this->messageText !== null) {
