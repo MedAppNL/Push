@@ -71,7 +71,13 @@ class GooglePushService extends AbstractPushService
                     $results = $contents['results'];
                     foreach ($recipients_part as $idx => $recipient) {
                         if (isset($results[$idx]['message_id']) && !isset($results[$idx]['error'])) {
-                            $ok[] = $recipient;
+                            if(isset($results[$idx]['registration_id']) && $results[$idx]['registration_id'] != $idx) {
+                                $this->failedRecipients[] = $recipient;
+                            }
+                            else {
+                                $ok[] = $recipient;
+                            }
+
                         } else {
                             $this->failedRecipients[] = $recipient;
                         }
