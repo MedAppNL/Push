@@ -18,7 +18,7 @@ class GooglePushService extends AbstractPushService
      */
     public function loadConfiguration($config)
     {
-        $host = 'https://gcm-http.googleapis.com';
+        $host = 'https://fcm.googleapis.com';
 
         if (!isset($config['apikey'])) {
             return false;
@@ -62,7 +62,7 @@ class GooglePushService extends AbstractPushService
         $recipients_chunked = array_chunk($this->recipients, 1000);
         foreach ($recipients_chunked as $recipients_part) {
             $body['registration_ids'] = $recipients_part;
-            $promises[] = $this->client->postAsync('/gcm/send', [
+            $promises[] = $this->client->postAsync('/fcm/send', [
                 'body' => json_encode($body),
             ])->then(function (ResponseInterface $response) use (&$ok, $recipients_part) {
                 if ($response->getStatusCode() == 200) {
