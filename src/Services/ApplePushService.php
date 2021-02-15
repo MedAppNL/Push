@@ -13,6 +13,11 @@ class ApplePushService extends AbstractPushService
      */
     private $client;
 
+    public function setMessageTitle($title)
+    {
+        throw new RuntimeException('APNS does not support message title');
+    }
+
     /**
      * @inheritdoc
      */

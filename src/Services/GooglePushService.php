@@ -36,6 +36,17 @@ class GooglePushService extends AbstractPushService
     }
 
     /**
+     * Set message title
+     *
+     * @param string $title message title
+     */
+    public function setMessageTitle($title)
+    {
+        $this->messageTitle = $title;
+        return $this;
+    }
+
+    /**
      * @inheritdoc
      */
     public function send()
@@ -48,8 +59,12 @@ class GooglePushService extends AbstractPushService
             $body['data'] = $this->messageData;
         }
 
+        if ($this->messageTitle !== null) {
+            $body['data']['title'] = $this->messageTitle;
+        }
+
         if ($this->messageText !== null) {
-            $body['data']['message'] = $this->messageText;
+            $body['data']['content'] = $this->messageText;
         }
 
         if ($this->additionalFields !== null) {

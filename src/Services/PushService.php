@@ -24,6 +24,16 @@ interface PushService
     public function setMessageText($message);
 
     /**
+     * Set the message title for this push message.
+     *
+     * @param string $title
+     *   The message title to set
+     * @return self
+     *   This instance, to allow chaining
+     */
+    public function setMessageTitle($title);
+
+    /**
      * Set the message data for this push message.
      * This will clear any previous message data
      *
